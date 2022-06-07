@@ -7,12 +7,12 @@ import 'package:qamar_zaman_kaira/pages/signup.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
-
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  bool passwordObsecured =true;
   get style => null;
   late String email,password;
   Widget _buildlogo() {
@@ -86,10 +86,10 @@ class _LoginState extends State<Login> {
       },
       decoration: InputDecoration(
         prefixIcon: Icon(
-          Icons.email,
+          Icons.person,
           color: Color(0xFFe9533c),
         ),
-        labelText:'E-mail', 
+        labelText:'Username', 
       ),
     ),
     );
@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
     return Padding(padding: EdgeInsets.all(8),
     child: TextFormField(
       keyboardType: TextInputType.text,
-      obscureText: true,
+      obscureText: passwordObsecured,
       onChanged: (value ){
         setState(() {
            password = value;
@@ -110,9 +110,17 @@ class _LoginState extends State<Login> {
           color: Color(0xFFe9533c),
         ),
         labelText:'Password', 
+        suffixIcon: IconButton(onPressed: (){
+          setState(() {
+            passwordObsecured = !passwordObsecured;
+          });
+        },
+        icon: Icon(
+          passwordObsecured?
+          Icons.visibility_off: Icons.visibility),
       ),
     ),
-    );
+    ));
   }
   Widget _ForgotPasswordButton(){
     return Row(
