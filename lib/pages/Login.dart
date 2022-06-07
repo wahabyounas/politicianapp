@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qamar_zaman_kaira/pages/forgotpassword.dart';
 import 'package:qamar_zaman_kaira/pages/signup.dart';
+import 'package:qamar_zaman_kaira/theme.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,13 +16,17 @@ class _LoginState extends State<Login> {
   bool passwordObsecured =true;
   get style => null;
   late String email,password;
+  bool _isObscure = true;
+  final myControllerUsername = TextEditingController();
+  final myControllerPassword = TextEditingController();
+  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   Widget _buildlogo() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         // 
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50,),
+          padding: const EdgeInsets.symmetric(vertical: 40,),
           child: Image.asset('assets/images/k.png',height: 100, width: 100,),
         ),
         
@@ -63,7 +68,6 @@ class _LoginState extends State<Login> {
                   ],
                 ),
                  _buildEmailRow(),
-                _buildPasswordRow(),
                 _ForgotPasswordButton(),
                 SizedBox(height: 5,),                
                 _buildLoginButton(),
@@ -75,52 +79,108 @@ class _LoginState extends State<Login> {
     );
   }
   Widget _buildEmailRow(){
-    return Padding(padding: EdgeInsets.all(8),
-    child: TextFormField(
-      keyboardType: TextInputType.text,
-      obscureText: true,
-      onChanged: (value ){
-        setState(() {
-           email = value;
-        });
-      },
-      decoration: InputDecoration(
-        prefixIcon: Icon(
-          Icons.person,
-          color: Color(0xFFe9533c),
+    return Padding(
+        padding: EdgeInsets.all(8),
+        child: Form(
+            key: globalFormKey,
+            child: Column(
+              children: [
+                TextFormField(
+                    controller: myControllerUsername,
+                    decoration: InputDecoration(
+                       prefixIcon: Icon(
+           Icons.person,
+          color:kPrimaryColor,
         ),
-        labelText:'Username', 
-      ),
-    ),
-    );
-  }
-  Widget _buildPasswordRow(){
-    return Padding(padding: EdgeInsets.all(8),
-    child: TextFormField(
-      keyboardType: TextInputType.text,
-      obscureText: passwordObsecured,
-      onChanged: (value ){
-        setState(() {
-           password = value;
-        });
-      },
-      decoration: InputDecoration(
-        prefixIcon: Icon(
-          Icons.password,
-          color: Color(0xFFe9533c),
+                      labelText: 'Username',
+                      labelStyle: TextStyle(
+                        color: kTextFieldColor,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: kPrimaryColor),
+                      ),
+                    )),
+                TextFormField(
+                    obscureText: _isObscure,
+                    controller: myControllerPassword,
+                    decoration: InputDecoration(
+                       prefixIcon: Icon(
+           Icons.password,
+          color:kPrimaryColor,
         ),
-        labelText:'Password', 
-        suffixIcon: IconButton(onPressed: (){
-          setState(() {
-            passwordObsecured = !passwordObsecured;
-          });
-        },
-        icon: Icon(
-          passwordObsecured?
-          Icons.visibility_off: Icons.visibility),
-      ),
-    ),
-    ));
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        color: kTextFieldColor,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: kPrimaryColor),
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
+                        icon: _isObscure
+                            ? Icon(
+                                Icons.visibility_off,
+                                color: kTextFieldColor,
+                              )
+                            : Icon(
+                                Icons.visibility,
+                                color: kPrimaryColor,
+                              ),
+                      ),
+                    ))
+              ],
+            )));
+  //   return Padding(padding: EdgeInsets.all(8),
+  //   child: TextFormField(
+  //     keyboardType: TextInputType.text,
+  //     obscureText: true,
+  //     onChanged: (value ){
+  //       setState(() {
+  //          email = value;
+  //       });
+  //     },
+  //     decoration: InputDecoration(
+  //       prefixIcon: Icon(
+  //         Icons.person,
+  //         color: Color(0xFFe9533c),
+  //       ),
+  //       labelText:'Username', 
+  //     ),
+  //   ),
+  //   );
+  // }
+  // Widget _buildPasswordRow(){
+  //   return Padding(padding: EdgeInsets.all(8),
+  //   child: TextFormField(
+  //     keyboardType: TextInputType.text,
+  //     obscureText: passwordObsecured,
+  //     onChanged: (value ){
+  //       setState(() {
+  //          password = value;
+  //       });
+  //     },
+  //     decoration: InputDecoration(
+  //       prefixIcon: Icon(
+  //         Icons.password,
+  //         color: Color(0xFFe9533c),
+  //       ),
+  //       labelText:'Password', 
+  //       suffixIcon: IconButton(onPressed: (){
+  //         setState(() {
+  //           passwordObsecured = !passwordObsecured;
+  //         });
+  //       },
+  //       icon: Icon(
+  //         passwordObsecured?
+  //         Icons.visibility_off: Icons.visibility),
+  //     ),
+  //   ),
+  //   ));
+
   }
   Widget _ForgotPasswordButton(){
     return Row(
