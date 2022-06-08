@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:qamar_zaman_kaira/pages/member.dart';
 
+import 'button.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -31,6 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Center(
           child: Column(
             children: [
+            //  CustomButton(onPressed: (){print('hadi');},),
              Expanded(child: _getLogo()),
              SizedBox(
                height: 20,
